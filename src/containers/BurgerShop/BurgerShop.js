@@ -24,11 +24,25 @@ class BurgerShop extends Component {
         return axios.get(endpoints.reviews + '?shopId=' + id);
       }).then(response => {
         this.setState({
-          reviews: response,
+          reviews: this.calculateScores(response.data),
           loadedDetails: true
         })
       })
   }
+
+  calculateScores(reviews) {
+    const textureScore = reviews.reduce((prev, curr) => prev + curr.textureScore, 0) / reviews.length;
+    const tasteScore = reviews.reduce((prev, curr) => prev + curr.tasteScore, 0) / reviews.length;
+    const visualScore = reviews.reduce((prev, curr) => prev + curr.visualScore, 0) / reviews.length;
+    const totalScore = (textureScore + visualScore + tasteScore) / 3;
+    return {
+      textureScore: textureScore.toFixed(1),
+      tasteScore: tasteScore.toFixed(1),
+      visualScore: visualScore.toFixed(1),
+      totalScore: totalScore.toFixed(1),
+      reviewNo: reviews.length
+    };
+  } 
   
   render() {
     let burgerElm = <div>Loading...</div>

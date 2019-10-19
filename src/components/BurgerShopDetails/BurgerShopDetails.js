@@ -16,8 +16,18 @@ function BurgerShopDetails(props) {
     name,
     openFrom,
     openTo,
-    openDays
+    openDays,
   } = props.shopDetails;
+
+  const {
+    textureScore,
+    tasteScore, 
+    visualScore,
+    totalScore,
+    reviewNo
+  } = props.reviews;
+
+  const hasReviews = reviewNo > 0 ? true : false;
 
   const pictureArr = props.shopDetails.pictures;
   const pictures = pictureArr.map(img => (
@@ -36,10 +46,19 @@ function BurgerShopDetails(props) {
           {openFrom} - {openTo}
         </dd>
       </dl>
-      <h2>Score: </h2>
-      <h3>Taste: </h3>
-      <h3>Texture: </h3>
-      <h3>Visual: </h3>
+      { hasReviews ?
+          <>
+            <h2>Score: {totalScore} </h2>
+            <h3>Taste: {tasteScore} </h3>
+            <h3>Texture: {textureScore} </h3>
+            <h3>Visual: {visualScore} </h3>
+            <p>Total reviews: {reviewNo}</p>
+          </>
+          : 
+          <>
+            <p><strong>{name}</strong> has no reviews yet <span role="img" aria-label="Sad smiley">😢</span></p>
+          </>
+        }
       <h3>{pictures}</h3>
     </div>
   );
