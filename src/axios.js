@@ -8,6 +8,7 @@ const endpoints = {
   users: '/users/',
   pictures: '/pictures/',
   shoplist: '/shoplist/',
-  shopdetail: '/shopdetails/'
+  shopdetail: '/shopdetails/',
+  reviews: '/reviews/'
 }
 export { instance, endpoints };

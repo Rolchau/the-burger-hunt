@@ -1,30 +1,38 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { css } from 'emotion';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { css, injectGlobal } from 'emotion';
 import UserList from './containers/UserList/UserList';
-import BurgerShopDetail from './containers/BurgerShopDetail/BurgerShopDetail';
 import BurgerShopList from './containers/BurgerShopList/BurgerShopList';
+import UserHallOfFame from './containers/UserHallOfFame/UserHallOfFame';
+import BurgerShop from './containers/BurgerShop/BurgerShop';
+
+injectGlobal`
+  :root {
+    background-color: #e2e8f0;
+  }
+`
 
 const AppWrapper = css`
-`
+
+`;
 
 function App() {
   return (
     <Router>
       <div className={AppWrapper}>
-        <div class="max-w-sm mx-auto flex p-6 bg-white rounded-lg shadow-xl">
-          <div class="pt-1">
-            <h4 class="text-xl text-gray-900 leading-tight">ChitChat</h4>
-            <p class="text-base text-gray-600 leading-normal">You have a new message!</p>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-4 py-2 px-4 rounded-full">
-              Find Burgers near you!
-            </button>
-          </div>
-        </div>
+        <header className="flex bg-white border-b border-gray-200 fixed top-0 inset-x-0 h-16 items-center justify-center bg-gray-100">
+          <NavLink to='/' exact className="mx-10" activeClassName="text-red-600">Home</NavLink>
+          <NavLink to='/' exact className="mx-10" activeClassName="text-red-600">Find shops</NavLink>
+          <NavLink to='/shoplist' className="mx-10" activeClassName="text-red-600">See all shops</NavLink>
+          <NavLink to='/users' className="mx-10" activeClassName="text-red-600">See the hunters</NavLink>
+        </header>
 
-        <Route path="/users" exact component={UserList} />
-        <Route path="/shop-detail" exact component={BurgerShopDetail} />
-        <Route path="/" exact component={BurgerShopList} />
+        <main className="mt-24">
+          <Route path="/" exact component={UserHallOfFame} />
+          <Route path="/users" exact component={UserList} />
+          <Route path="/shop-detail/:id" exact component={BurgerShop} />
+          <Route path="/shoplist" exact component={BurgerShopList} />
+        </main>
       </div>
     </Router>
   );

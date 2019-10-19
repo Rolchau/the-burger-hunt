@@ -17,7 +17,8 @@ class UserHallOfFame extends Component {
   }
 
   handleOnClick = (user) => {
-    
+    console.log(this.props);
+    this.props.history.push({pathname: '/users/' + user});
   }
 
   render() {

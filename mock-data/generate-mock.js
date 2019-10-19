@@ -68,7 +68,7 @@ function addPicture(pictureId, userId, username) {
 function generateShopDetails() {
   let shopDetails = [];
   for (let id = 0; id < AMOUNT; id++) {
-    const shopName = `${faker.commerce.productAdjective()} ${faker.commerce.productMaterial()} Burger`;
+    const shopName = `${faker.commerce.productAdjective()} ${faker.commerce.productMaterial()} Burgers`;
     // // This should ofcourse not be just one value on the backend, but multiple :) 
     // const tasteScore = faker.random.number({max: 5});
     // const textureScore = faker.random.number({max: 5});
