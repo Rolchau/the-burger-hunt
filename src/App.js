@@ -5,13 +5,13 @@ import UserList from './containers/UserList/UserList';
 import BurgerShopList from './containers/BurgerShopList/BurgerShopList';
 import UserHallOfFame from './containers/UserHallOfFame/UserHallOfFame';
 import BurgerShop from './containers/BurgerShop/BurgerShop';
+import BurgerRating from './containers/BurgerRating/BurgerRating';
 
 injectGlobal`
   :root {
     background-color: #e2e8f0;
   }
 `
-
 const AppWrapper = css`
 
 `;
@@ -32,6 +32,7 @@ function App() {
           <Route path="/users" exact component={UserList} />
           <Route path="/shop-detail/:id" exact component={BurgerShop} />
           <Route path="/shoplist" exact component={BurgerShopList} />
+          <Route path="/rate/:id" exact component={BurgerRating} />
         </main>
       </div>
     </Router>

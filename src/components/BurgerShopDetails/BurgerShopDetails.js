@@ -1,5 +1,6 @@
-import React from "react";
-import { css } from "emotion";
+import React from 'react';
+import { css } from 'emotion';
+import { Link } from 'react-router-dom';
 
 function BurgerShopDetails(props) {
   const burgerImg = css`
@@ -17,6 +18,7 @@ function BurgerShopDetails(props) {
     openFrom,
     openTo,
     openDays,
+    id
   } = props.shopDetails;
 
   const {
@@ -59,7 +61,13 @@ function BurgerShopDetails(props) {
             <p><strong>{name}</strong> has no reviews yet <span role="img" aria-label="Sad smiley">😢</span></p>
           </>
         }
-      <h3>{pictures}</h3>
+      
+      <Link to={'/rate/' + id} className="bg-yellow-600 hover:bg-yellow-700 transition-fast text-white font-bold py-2 px-4 rounded-full">
+        Rate it
+      </Link>
+
+      <h3 className="mt-3 text-2xl text-gray-700">User pictures</h3>
+      {pictures}
     </div>
   );
 }
