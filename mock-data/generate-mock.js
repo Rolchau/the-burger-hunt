@@ -8,6 +8,7 @@ const PICTURE_COUNT = 90;
  * - username
  * - email
  * - picture[]
+ * - reviews [shops{tastescore, visualscore, texturescore}]
  */
 function generateUsers() {
   let availablePictures = [...Array(PICTURE_COUNT).keys()];
@@ -16,7 +17,9 @@ function generateUsers() {
   for (let id = 0; id < USER_COUNT; id++) {
     let userPictures = [];
     let userName = faker.internet.userName();
-    const pictureCount = faker.random.number({min: 0, max: 4});
+    
+    // Add pictures to user
+    const pictureCount = faker.random.number({min: 1, max: 5});
     for (let i = 0; i < pictureCount; i++) {
       const randomImgNo = faker.random.number({min: 0, max: availablePictures.length});
       const pictureAdded = availablePictures.splice(randomImgNo, 1)[0];
@@ -30,7 +33,8 @@ function generateUsers() {
       id: id,
       username: userName,
       email: faker.internet.email(),
-      pictures: userPictures
+      pictures: userPictures,
+      reviews: []
     });
   }
   return users;
@@ -44,7 +48,7 @@ function generateUsers() {
  */
 let pictures = [];
 function addPicture(pictureId, userId, username) {
-  let picture = {
+  const picture = {
     id: pictureId,
     imageUrl: faker.image.food(),
     shopId: faker.random.number({min: 0, max: AMOUNT}),
@@ -65,11 +69,11 @@ function generateShopDetails() {
   let shopDetails = [];
   for (let id = 0; id < AMOUNT; id++) {
     const shopName = `${faker.commerce.productAdjective()} ${faker.commerce.productMaterial()} Burger`;
-    // This should ofcourse not be just one value on the backend, but multiple :) 
-    const tasteScore = faker.random.number({max: 5});
-    const textureScore = faker.random.number({max: 5});
-    const visualScore = faker.random.number({max: 5});
-    const avgScore = ((tasteScore + textureScore + visualScore) / 3).toFixed(2);
+    // // This should ofcourse not be just one value on the backend, but multiple :) 
+    // const tasteScore = faker.random.number({max: 5});
+    // const textureScore = faker.random.number({max: 5});
+    // const visualScore = faker.random.number({max: 5});
+    // const avgScore = ((tasteScore + textureScore + visualScore) / 3).toFixed(2);
     const openingHoursFrom = faker.random.number({min: 7, max: 10}) + ':00';
     const openingHoursTo = faker.random.number({min: 15, max: 22}) + ':00';
     const openingDays = 'Monday to Friday';
@@ -80,14 +84,11 @@ function generateShopDetails() {
     shopDetails.push({
       id: id,
       name: shopName,
-      tasteScore: tasteScore,
-      textureScore: textureScore,
-      visualScore: visualScore,
-      avgScore: avgScore,
       openFrom: openingHoursFrom,
       openTo: openingHoursTo,
       openDays: openingDays,
-      pictures: shopPictures
+      pictures: shopPictures,
+      reviews: [],
     });
   }
   return shopDetails;
@@ -110,16 +111,54 @@ function generateShopList(shopDetails) {
   return shopList;
 }
 
+function generateReviews(users, shopDetails) {
+  let reviews = [];
+  for(let id = 0; id < shopDetails.length; id++) {
+    const shop = shopDetails[id];
+    const userArr = [...Array(users.length).keys()];
+
+    const noOfTotalReviews = faker.random.number({min: 0, max: users.length / 2});    
+    for (let index = 0; index < noOfTotalReviews; index++) {
+      const userNo = faker.random.number({min: 0, max: userArr.length - 1});
+      const currUser = userArr.splice(userNo, 1)[0];
+      const user = users[currUser];
+      user.reviews.push(reviews.length);
+      user.reviewCount = user.reviews.length;
+      reviews.push({
+        id: reviews.length,
+        shopId: shop.id,
+        userId: user.id,
+        tasteScore: faker.random.number({max: 5}),
+        textureScore: faker.random.number({max: 5}),
+        visualScore: faker.random.number({max: 5}),
+      })
+    }
+  }
+  return reviews;
+}
+
+function updateReviewScores(shopDetails, reviews) {
+  for (let i = 0; i < reviews.length; i++) {
+    const review = reviews[i];
+    const shop = shopDetails[review.shopId];
+    shop.reviews.push(review.id);
+  }
+}
+
 let generateMock = () => {  
   let users = generateUsers();
   let shopDetails = generateShopDetails();
   let shopList = generateShopList(shopDetails);
+  let reviews = generateReviews(users, shopDetails);
+  
+  updateReviewScores(shopDetails, reviews);
 
   return {
     pictures: pictures, 
-    shopDetails: shopDetails,
     shoplist: shopList,
-    users: users
+    reviews: reviews,
+    shopDetails: shopDetails,
+    users: users,
   };
 };
 

@@ -8,12 +8,14 @@ const user = css`
 `;
 
 function User(props) {
-  const { username } = props.user
+  const { username, email } = props.user
   
   return (
-    <li className={user}>
-      User name:<br/>
-      <strong>{ username }</strong> 
+    <li className={user} onClick={props.handleClick}>
+      <ul>
+        <li>User name: <strong>{ username }</strong></li>
+        <li>Email: <strong>{ email }</strong></li>
+      </ul>
     </li>
   );
 }

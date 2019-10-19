@@ -14,8 +14,16 @@ class UserList extends React.Component {
       });
   }
 
+  handleOnUserClick(userId) {
+    console.log('What?!');
+    axios.get(`${endpoints.users}${userId}/pictures`)
+      .then(response => {
+        console.log(response);
+      })
+  }
+
   render() {
-    const users = this.state.users.map(user => <User key={user.id} user={user} />);
+    const users = this.state.users.map(user => <User key={user.id} user={user} handleClick={() => this.handleOnUserClick(user.id)}/>);
     return (
       <ul>
         {users}
