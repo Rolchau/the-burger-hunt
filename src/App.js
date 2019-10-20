@@ -10,6 +10,7 @@ import DummySignIn from './containers/Authentication/SignIn/DummySignIn';
 import LandingPage from './containers/LandingPage/LandingPage';
 import HomePage from './containers/HomePage/HomePage';
 import AuthContext from './containers/Authentication/AuthContext'
+import UserDetail from './containers/UserDetail/UserDetail';
 
 const fadeIn = keyframes` 
   0%  { opacity: 0; }
@@ -33,8 +34,8 @@ export const ThemeContext = React.createContext('light');
 
 class App extends React.Component {
   state = {
-    loggedInUser: null, 
-    authenticated: false,
+    loggedInUser: {username: "Rolchau", email: "rolchau@gmail.com", password: "123", id: 15}, 
+    authenticated: true,
   }
 
   setUser = user => {
@@ -64,19 +65,20 @@ class App extends React.Component {
 
           <main className="mt-24">
             <Switch>
-              <Route path="/landing" exact component={LandingPage}></Route>
-              <Route path="/signup" exact component={DummySignUp} />
-              <Route path="/signin" exact component={DummySignIn} />
+              <Route path="/" exact component={LandingPage}></Route>
+              <Route path="/signup" component={DummySignUp} />
+              <Route path="/signin" component={DummySignIn} />
               {this.state.authenticated && 
                 <>
                   <Route path="/home" exact component={HomePage} />
                   <Route path="/users" exact component={UserList} />
-                  <Route path="/shoplist" exact component={BurgerShopList} />
-                  <Route path="/shop-detail/:id" exact component={BurgerShop} />
-                  <Route path="/rate/:id" exact component={BurgerRating} />
+                  <Route path="/user-detail/:id" component={UserDetail} />
+                  <Route path="/shoplist" component={BurgerShopList} />
+                  <Route path="/shop-detail/:id" component={BurgerShop} />
+                  <Route path="/rate/:id" component={BurgerRating} />
                 </>
               }
-              <Redirect from="/" to="/landing" />
+              {/* <Redirect from="/" to="/landing" /> */}
               <Redirect from="*" to="/" />
             </Switch>
           </main>

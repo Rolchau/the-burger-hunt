@@ -26,12 +26,10 @@ class DummySignIn extends Component {
                 // A validation like this shouldn't be handled in the frontend :)
                 axios.get(endpoints.users+ '?username=' + values.username +'&password=' + values.password)
                   .then(response => {    
-                      console.log(response.data);            
                       if (response.data.length) {
                         context.setUser(response.data[0]);
                         this.props.history.push('/home');
                       } else {
-                        console.log('failed...');
                         //TODO TRM - Error message doesn't show...
                         actions.setFieldError('login-error', 'Wrong user or password');
                       }

@@ -7,7 +7,6 @@ class LandingPage extends Component {
     return (
       <AuthContext.Consumer>
         {(context) => {
-          console.log(context);
           const isAuthenticated = context.authenticated
           return (
             <>

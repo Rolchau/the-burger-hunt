@@ -17,7 +17,6 @@ class BurgerRating extends Component {
   };
 
   componentDidMount() {
-    console.log(this.context);
     const id = this.props.match.params.id;
     axios.get(endpoints.shopdetail + id).then(response => {
       this.setState({
@@ -36,7 +35,8 @@ class BurgerRating extends Component {
       visualScore: this.state.visualScore
     };
     axios.post(endpoints.reviews, data).then(response => {
-      console.log(response);
+      //TODO TRM - Redirect or if in modal, close.
+      console.log(response.data);
     });
   };
 

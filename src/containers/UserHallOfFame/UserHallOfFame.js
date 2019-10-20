@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { instance, endpoints} from '../../axios';
 import axios from 'axios';
 import UserShort from '../../components/User/UserShort';
@@ -13,7 +14,6 @@ class UserHallOfFame extends Component {
     axios.all([instance.get(endpoints.users),instance.get(endpoints.reviews)])
       .then(axios.spread(
         (users, reviews) => {
-          console.log('Users', users);
           const userArr = users.data;
           const reviewArr = reviews.data;
           userArr.forEach(user => {
@@ -28,14 +28,13 @@ class UserHallOfFame extends Component {
       ));
     }
 
-  handleOnClick = (user) => {
+  handleOnClick = (userId) => {
     console.log('Hall of fame user clicked...');
-    //this.props.history.push({pathname: '/users/' + user});
+    this.props.history.push( '/user-detail/' + userId );
   }
 
   render() {
     const users = this.state.users.map(user => <UserShort key={user.id} user={user} handleClick={() => this.handleOnClick(user.id)}/>);
-    console.log(users);
     return (
       <div className="fade-in shadow-lg leading-normal bg-white max-w-md mx-auto p-6 rounded-lg">
         <h1 className="text-gray-600 text-2xl mb-4">Top 5 Burger Hunters</h1>
@@ -45,4 +44,4 @@ class UserHallOfFame extends Component {
   }
 }
 
-export default UserHallOfFame
+export default withRouter(UserHallOfFame)
