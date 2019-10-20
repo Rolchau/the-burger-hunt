@@ -5,9 +5,9 @@ import icons from '../../assets/sprite.svg'
 const icon = css`
   width: 30px;
   height: 30px;
-  color: white;
+  color: currentColor;
   stroke-width: 1.5;
-  fill: white;
+  fill: currentColor;
   transition: fill 0.15s ease-in-out, color 0.15s ease-in-out;
 `
 

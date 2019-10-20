@@ -10,7 +10,8 @@ class BurgerRating extends Component {
     userId: 2,
     tasteScore: 0,
     textureScore: 0,
-    visualScore: 0
+    visualScore: 0,
+    disabledBtn: true,
   };
 
   componentDidMount() {
@@ -38,11 +39,12 @@ class BurgerRating extends Component {
 
   getRating = (type, no) => {
     this.setState({
-      [type]: no
+      [type]: no,
     });
   };
 
   render() {
+    const isBtnEnabled = this.state.visualScore && this.state.textureScore && this.state.tasteScore;
     return (
       <div>
         <p>Did you catch a burger on:</p>
@@ -68,8 +70,8 @@ class BurgerRating extends Component {
             getRating={this.getRating}
           />
         </div>
-        <button
-          className="bg-yellow-600 hover:bg-yellow-700 transition-fast text-white font-bold py-2 px-4 rounded-full"
+        <button disabled={!isBtnEnabled}
+          className={(!isBtnEnabled ? 'cursor-not-allowed opacity-50 ' : '') + 'bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-full'}
           onClick={this.onVoteClick}
         >
           Send review...

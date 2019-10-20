@@ -50,7 +50,7 @@ let pictures = [];
 function addPicture(pictureId, userId, username) {
   const picture = {
     id: pictureId,
-    imageUrl: faker.image.food(),
+    imageUrl: 'https://baconmockup.com/200/160/',
     shopId: faker.random.number({min: 0, max: AMOUNT}),
     userId: userId,
     userName: username,
@@ -105,7 +105,6 @@ function generateShopList(shopDetails) {
     shopList.push({
       id: shopDetails[id].id,
       name: shopDetails[id].name,
-      score: shopDetails[id].avgScore
     });
   }
   return shopList;
@@ -148,8 +147,8 @@ function updateReviewScores(shopDetails, reviews) {
 let generateMock = () => {  
   let users = generateUsers();
   let shopDetails = generateShopDetails();
-  let shopList = generateShopList(shopDetails);
   let reviews = generateReviews(users, shopDetails);
+  let shopList = generateShopList(shopDetails);
   
   updateReviewScores(shopDetails, reviews);
 

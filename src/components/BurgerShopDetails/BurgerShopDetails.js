@@ -5,12 +5,14 @@ import { Link } from 'react-router-dom';
 function BurgerShopDetails(props) {
   const burgerImg = css`
     max-width: 100%;
-    border: none;
   `;
 
   const burgerImgWrapper = css`
     width: 200px;
     height: 150px;
+    border: 1px solid gray;
+    border-radius: 16px;
+    overflow: hidden;
   `;
 
   const {
@@ -33,7 +35,7 @@ function BurgerShopDetails(props) {
 
   const pictureArr = props.shopDetails.pictures;
   const pictures = pictureArr.map(img => (
-    <div key={img.id} className={burgerImgWrapper + ' border-gray-1'}>
+    <div key={img.id} className={burgerImgWrapper}>
       <img className={burgerImg} src={img.imageUrl} alt="" />
     </div>
   ));
@@ -66,8 +68,15 @@ function BurgerShopDetails(props) {
         Rate it
       </Link>
 
-      <h3 className="mt-3 text-2xl text-gray-700">User pictures</h3>
-      {pictures}
+      {pictureArr.length ? 
+        <>
+        <h3 className="mt-3 text-2xl text-gray-700">User pictures</h3>
+        {pictures}
+        </>
+        :
+        <h3>TODO - Add upload button here. No images yet..</h3>
+      }
+      
     </div>
   );
 }
