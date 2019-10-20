@@ -1,9 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink, Redirect, Switch } from 'react-router-dom';
 import { css, injectGlobal, keyframes } from 'emotion';
 import UserList from './containers/UserList/UserList';
 import BurgerShopList from './containers/BurgerShopList/BurgerShopList';
-import UserHallOfFame from './containers/UserHallOfFame/UserHallOfFame';
 import BurgerShop from './containers/BurgerShop/BurgerShop';
 import BurgerRating from './containers/BurgerRating/BurgerRating';
 import DummySignUp from './containers/Authentication/SignUp/DummySignUp';
@@ -39,7 +38,7 @@ class App extends React.Component {
   }
 
   setUser = user => {
-    this.state.setState({
+    this.setState({
       loggedInUser: user,
       authenticated: true
     });
@@ -64,19 +63,22 @@ class App extends React.Component {
           </header>
 
           <main className="mt-24">
-            <Route path="/" exact component={LandingPage}></Route>
-            <Route path="/signup" exact component={DummySignUp} />
-            <Route path="/signin" exact component={DummySignIn} />
-            {this.state.authenticated && 
-              <>
-                <Route path="/home" exact component={HomePage} />
-                <Route path="/users" exact component={UserList} />
-                <Route path="/shop-detail/:id" exact component={BurgerShop} />
-                <Route path="/shoplist" exact component={BurgerShopList} />
-                <Route path="/rate/:id" exact component={BurgerRating} />
-                <Route path="/hall-of-fame" exact component={UserHallOfFame} />
-              </>
-            }
+            <Switch>
+              <Route path="/landing" exact component={LandingPage}></Route>
+              <Route path="/signup" exact component={DummySignUp} />
+              <Route path="/signin" exact component={DummySignIn} />
+              {this.state.authenticated && 
+                <>
+                  <Route path="/home" exact component={HomePage} />
+                  <Route path="/users" exact component={UserList} />
+                  <Route path="/shoplist" exact component={BurgerShopList} />
+                  <Route path="/shop-detail/:id" exact component={BurgerShop} />
+                  <Route path="/rate/:id" exact component={BurgerRating} />
+                </>
+              }
+              <Redirect from="/" to="/landing" />
+              <Redirect from="*" to="/" />
+            </Switch>
           </main>
         </div>
         </AuthContext.Provider>

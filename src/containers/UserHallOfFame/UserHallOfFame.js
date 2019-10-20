@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { instance as axios, endpoints} from '../../axios';
+import { instance, endpoints} from '../../axios';
+import axios from 'axios';
 import UserShort from '../../components/User/UserShort';
 
 class UserHallOfFame extends Component {
@@ -9,12 +10,23 @@ class UserHallOfFame extends Component {
   };
 
   componentDidMount() {
-    axios.get(endpoints.users + '?_sort=reviewCount&_order=desc&_limit=5')
-      .then(response => {
-        this.setState({users: response.data});
-        console.log(this.state.users);
-      })
-  }
+    axios.all([instance.get(endpoints.users),instance.get(endpoints.reviews)])
+      .then(axios.spread(
+        (users, reviews) => {
+          console.log('Users', users);
+          const userArr = users.data;
+          const reviewArr = reviews.data;
+          userArr.forEach(user => {
+            let matchingReviews = reviewArr.filter(review => review.userId === user.id);
+            user.reviewCount = matchingReviews.length;
+          });
+          userArr.sort((x, y) => y.reviewCount - x.reviewCount);
+          this.setState({
+            users: userArr.splice(0,5)
+          })
+        }
+      ));
+    }
 
   handleOnClick = (user) => {
     console.log('Hall of fame user clicked...');

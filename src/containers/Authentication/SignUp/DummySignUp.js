@@ -13,7 +13,7 @@ class DummySignUp extends Component {
 
   render() {
       return (
-      <div className="w-full max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div className="fade-in w-full max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         {!this.state.isCreated && 
           <Formik
             initialValues={{ username: '', email: '', password: '' }}
@@ -21,6 +21,9 @@ class DummySignUp extends Component {
               let errors = {};
               if (!values.username) {
                 errors.username = 'Required';
+              }
+              if (!values.password) {
+                errors.password = 'Required';
               }
               if (!values.email) {
                 errors.email = 'Required';
@@ -34,7 +37,6 @@ class DummySignUp extends Component {
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 axios.post(endpoints.users, values).then(() =>{
-                    console.log('Created user..')
                     setSubmitting(false);
                     this.setState({isCreated: true});
                   }
@@ -74,7 +76,7 @@ class DummySignUp extends Component {
       }
       { this.state.isCreated &&
         <div className="fade-in">
-          <h1 className="text-2xl text-gray-700 mb-5">Thanks! No sign in to hunt some burgers!</h1>
+          <h1 className="text-2xl text-gray-700 mb-5">Thanks! Now sign in to hunt some burgers!</h1>
           <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to='/signin'>Sign in here</Link>
         </div>
       }

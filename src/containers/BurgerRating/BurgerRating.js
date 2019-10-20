@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import BurgerRate from "../../components/BurgerRate/BurgerRate";
 import { instance as axios, endpoints } from "../../axios";
+import AuthContext from '../Authentication/AuthContext';
 
 class BurgerRating extends Component {
+  static contextType = AuthContext;
+  
   state = {
-    name: "",
-    shopId: "",
-    //TODO TRM - Change userId to active user...
-    userId: 2,
+    name: '',
+    shopId: '',
+    userId: this.context.loggedInUser.id,
     tasteScore: 0,
     textureScore: 0,
     visualScore: 0,
@@ -15,6 +17,7 @@ class BurgerRating extends Component {
   };
 
   componentDidMount() {
+    console.log(this.context);
     const id = this.props.match.params.id;
     axios.get(endpoints.shopdetail + id).then(response => {
       this.setState({
