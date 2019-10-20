@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { instance as axios, endpoints } from "../../axios";
+import { CancelToken } from 'axios';
 import BurgerShopShort from "../../components/BurgerShopDetails/BurgerShopShort";
 
 class BurgerShopList extends Component {
@@ -8,9 +9,14 @@ class BurgerShopList extends Component {
     isLoading: true,
   };
 
+  constructor(props) {
+    super(props);
+    this.source = CancelToken.source();
+  }
+
   componentDidMount() {
     this.setState({isLoading: true});
-    axios.get(endpoints.shoplist).then(response => {
+    axios.get(endpoints.shoplist, {cancelToken: this.source.token}).then(response => {
       this.setState({
         shops: response.data
       });
@@ -36,6 +42,10 @@ class BurgerShopList extends Component {
         })
       }
     );
+  }
+
+  componentWillUnmount() {
+    this.source.cancel();
   }
 
   handleOnClick = shopId => {
@@ -76,7 +86,7 @@ class BurgerShopList extends Component {
       />
     ));
     return (
-      <div className="max-w-lg mx-auto m-4 p-6 bg-white rounded-lg shadow-xl">
+      <div className="fade-in max-w-lg mx-auto m-4 p-6 bg-white rounded-lg shadow-xl">
       {this.state.isLoading ? 
         <div>Loading...TODO - spinner</div>
         :

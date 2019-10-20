@@ -9,6 +9,7 @@ const endpoints = {
   pictures: '/pictures/',
   shoplist: '/shoplist/',
   shopdetail: '/shopdetails/',
-  reviews: '/reviews/'
+  reviews: '/reviews/',
+  signup: '/signup/',
 }
 export { instance, endpoints };

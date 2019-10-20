@@ -127,9 +127,9 @@ function generateReviews(users, shopDetails) {
         id: reviews.length,
         shopId: shop.id,
         userId: user.id,
-        tasteScore: faker.random.number({max: 5}),
-        textureScore: faker.random.number({max: 5}),
-        visualScore: faker.random.number({max: 5}),
+        tasteScore: faker.random.number({min: 1, max: 5}),
+        textureScore: faker.random.number({min: 1, max: 5}),
+        visualScore: faker.random.number({min: 1, max: 5}),
       })
     }
   }

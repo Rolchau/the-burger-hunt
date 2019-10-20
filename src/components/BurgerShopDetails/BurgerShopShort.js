@@ -24,7 +24,7 @@ function BurgerShopShort(props) {
         smiley = <Icon name="grin2"></Icon>
         break;
       default:
-        smiley = <div>TODO - Unrated</div>
+        smiley = <Icon name="neutral2"></Icon>
     }
     return smiley;
   }

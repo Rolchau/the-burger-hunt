@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-class SignIn extends Component {
+class LandingPage extends Component {
   render() {
     return (
       <div>
-        Sign In
+        Welcome to Zoombo.com        
       </div>
     )
   }
 }
 
-export default SignIn
+export default LandingPage
