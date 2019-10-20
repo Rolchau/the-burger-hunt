@@ -10,8 +10,7 @@ import DummySignUp from './containers/Authentication/SignUp/DummySignUp';
 import DummySignIn from './containers/Authentication/SignIn/DummySignIn';
 import LandingPage from './containers/LandingPage/LandingPage';
 import HomePage from './containers/HomePage/HomePage';
-import AuthProvider from './containers/Authentication/AuthContext'
-import AuthContext from ''
+import AuthContext from './containers/Authentication/AuthContext'
 
 const fadeIn = keyframes` 
   0%  { opacity: 0; }
@@ -33,35 +32,57 @@ const AppWrapper = css`
 
 export const ThemeContext = React.createContext('light');
 
-function App() {
-  return (
-    <Router>
-      <AuthProvider>
-      <div className={AppWrapper}>
-        <header className="flex bg-white border-b border-gray-200 fixed top-0 inset-x-0 h-16 items-center justify-center bg-gray-100">
-          <NavLink to='/home' exact className="mx-10" activeClassName="text-red-600">Home</NavLink>
-          <NavLink to='/shoplist' className="mx-10" activeClassName="text-red-600">See all shops</NavLink>
-          <NavLink to='/users' className="mx-10" activeClassName="text-red-600">See the hunters</NavLink>
-          <NavLink to='/users' className="mx-10" activeClassName="text-red-600">See the hunters</NavLink>
-        </header>
+class App extends React.Component {
+  state = {
+    loggedInUser: null, 
+    authenticated: false,
+  }
 
-        <main className="mt-24">
-          <Route path="/" exact component={LandingPage}></Route>
-          <Route path="/home" exact component={HomePage} />
-          <Route path="/signup" exact component={DummySignUp} />
-          <Route path="/signin" exact component={DummySignIn} />
-          <ThemeContext.Provider value="hasselnoed">
-            <Route path="/users" exact component={UserList} />
-            <Route path="/shop-detail/:id" exact component={BurgerShop} />
-            <Route path="/shoplist" exact component={BurgerShopList} />
-            <Route path="/rate/:id" exact component={BurgerRating} />
-            <Route path="/hall-of-fame" exact component={UserHallOfFame} />
-          </ThemeContext.Provider>
-        </main>
-      </div>
-      </AuthProvider>
-    </Router>
-  );
+  setUser = user => {
+    this.state.setState({
+      loggedInUser: user,
+      authenticated: true
+    });
+  }
+
+  logout = () => {
+    this.setState({
+      authenticated: false,
+      loggedInUser: null
+    });
+  }
+
+  render () {
+    return (
+      <Router>
+        <AuthContext.Provider value={{authenticated: this.state.authenticated, loggedInUser: this.state.loggedInUser, setUser: this.setUser}}>
+        <div className={AppWrapper}>
+          <header className="flex bg-white border-b border-gray-200 fixed top-0 inset-x-0 h-16 items-center justify-center bg-gray-100">
+            <NavLink to='/home' exact className="mx-10" activeClassName="text-red-600">Home</NavLink>
+            <NavLink to='/shoplist' className="mx-10" activeClassName="text-red-600">See all shops</NavLink>
+            <NavLink to='/users' className="mx-10" activeClassName="text-red-600">See the hunters</NavLink>
+          </header>
+
+          <main className="mt-24">
+            <Route path="/" exact component={LandingPage}></Route>
+            <Route path="/signup" exact component={DummySignUp} />
+            <Route path="/signin" exact component={DummySignIn} />
+            {this.state.authenticated && 
+              <>
+                <Route path="/home" exact component={HomePage} />
+                <Route path="/users" exact component={UserList} />
+                <Route path="/shop-detail/:id" exact component={BurgerShop} />
+                <Route path="/shoplist" exact component={BurgerShopList} />
+                <Route path="/rate/:id" exact component={BurgerRating} />
+                <Route path="/hall-of-fame" exact component={UserHallOfFame} />
+              </>
+            }
+          </main>
+        </div>
+        </AuthContext.Provider>
+      </Router>
+    );
+  }
 }
 
 export default App;
