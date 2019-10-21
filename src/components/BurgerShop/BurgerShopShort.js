@@ -30,13 +30,13 @@ function BurgerShopShort(props) {
   }
 
   return (
-    <div onClick={props.handleClick}>
-      {name}
-      <div>
-        {score}
-        {getSmiley(score)}
+    <a href="/prevented" onClick={props.handleClick} className="flex border-b content-center border-orange-400 py-2 hover:bg-orange-300">
+      <span className="mr-4 self-center">{getSmiley(score)}</span>
+      <div className="text-xl self-center font-bold">{name}</div>
+      <div className="ml-auto">
+        <span className="text-3xl">{score}</span>        
       </div>
-    </div>
+    </a>
   );
 }
 

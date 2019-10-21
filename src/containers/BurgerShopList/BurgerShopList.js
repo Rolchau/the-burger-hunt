@@ -48,7 +48,9 @@ class BurgerShopList extends Component {
     this.source.cancel();
   }
 
-  handleOnClick = shopId => {
+  handleOnClick = (event, shopId) => {
+    event.preventDefault();
+    //TODO TRM - Could just pass ID to BurgerShopShort and use <Link> instead.
     this.props.history.push( '/shop-detail/' + shopId );
   };
 
@@ -82,18 +84,20 @@ class BurgerShopList extends Component {
         key={shop.id}
         shop={shop}
         score={shop.score}
-        handleClick={() => this.handleOnClick(shop.id)}
+        handleClick={(event) => this.handleOnClick(event, shop.id)}
       />
     ));
     return (
-      <div className="fade-in max-w-lg mx-auto m-4 p-6 bg-white rounded-lg shadow-xl">
+      <div className="fade-in mt-24 mx-auto max-w-3xl bg-orange-200 text-orange-900 rounded-lg sm:p-8 p-4">
       {this.state.isLoading ? 
-        <div>Loading...TODO - spinner</div>
+        <div>Loading... Imagine a fancy spinner here</div>
         :
         <>
-          <button className="" onClick={() => this.onSortByClick('name')}>Sort by name</button>
-          <button className="" onClick={() => this.onSortByClick('score-desc')}>Score desc</button>
-          <button className="" onClick={() => this.onSortByClick('score-asc')}>Score asc</button>          
+          <div className="mb-4">
+            <button className="bg-orange-300 hover:bg-orange-400 text-orange-800 font-bold py-2 px-4 rounded-l" onClick={() => this.onSortByClick('name')}>Sort by name</button>
+            <button className="bg-orange-300 hover:bg-orange-400 text-orange-800 font-bold py-2 px-4" onClick={() => this.onSortByClick('score-desc')}>Score desc</button>
+            <button className="bg-orange-300 hover:bg-orange-400 text-orange-800 font-bold py-2 px-4 rounded-r" onClick={() => this.onSortByClick('score-asc')}>Score asc</button>          
+          </div>
           <div className="fadeIn" id='shops'>
             {shops}
           </div>
