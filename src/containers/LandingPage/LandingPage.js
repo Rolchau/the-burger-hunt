@@ -50,7 +50,8 @@ class LandingPage extends Component {
   }
   
   biteClick = (evt) => {
-    const newBite = { top: evt.clientY, left: evt.clientX };
+    const bounds = evt.target.getBoundingClientRect();
+    const newBite = { top: evt.clientY - bounds.top , left: evt.clientX - bounds.left };
     this.setState(prevState => { 
       return { 
         bites: [...prevState.bites, newBite]

@@ -4,7 +4,7 @@ import { css } from 'emotion';
 const bite = css`
   width: 100px;
   height: 100px;
-  position: fixed;
+  position: absolute;
   z-index: 100;
   transform: translate(-50%, -50%);
 `;
