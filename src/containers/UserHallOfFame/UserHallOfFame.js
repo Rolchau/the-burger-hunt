@@ -29,7 +29,6 @@ class UserHallOfFame extends Component {
     }
 
   handleOnClick = (userId) => {
-    console.log('Hall of fame user clicked...');
     this.props.history.push( '/user-detail/' + userId );
   }
 

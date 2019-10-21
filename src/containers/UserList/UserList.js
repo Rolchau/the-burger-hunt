@@ -15,7 +15,6 @@ class UserList extends React.Component {
   }
 
   handleOnUserClick(userId) {
-    console.log('What?!');
     axios.get(`${endpoints.users}${userId}/pictures`)
       .then(response => {
         console.log(response);

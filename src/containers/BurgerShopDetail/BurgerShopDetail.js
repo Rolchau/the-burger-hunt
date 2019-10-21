@@ -24,7 +24,6 @@ class BurgerShopDetail extends Component {
     ])
     .then(
       axios.spread((shop, reviews, pictures) => {
-        console.log('Pictures', pictures.data);
         this.setState({
           shopDetails: shop.data,
           reviews: this.calculateScores(reviews.data),
@@ -60,7 +59,6 @@ class BurgerShopDetail extends Component {
   }
 
   rateClickHandler = () => {
-    console.log('Starting rating');
     this.setState({
       isRating: true,
     });

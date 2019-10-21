@@ -3,19 +3,23 @@ import { Redirect, Link } from 'react-router-dom';
 import AuthContext from '../Authentication/AuthContext';
 import { css } from 'emotion';
 import burger from '../../assets/burger.svg';
+import Bite from '../../components/ui/Bite';
 
 const pageWrapper = css`
   margin-top: -6rem;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center; 
+  @media (min-width: 38em) {
+    height: 100vh;
+  }
 `;
 
 const heroWrapper = css`
   max-width: 90vw;
   max-height: 90vh;
   display: flex;
+  flex-wrap: wrap;
   height: 600px;
   width: 100%;
   box-shadow: 0px 28px 80px 27px rgba(0,0,0,0.2), 0px 28px 24px -13px rgba(0,0,0,0.1);
@@ -29,15 +33,31 @@ const burgerHero = css`
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex: 1 0 300px;
 `;
 
 const signHero = css`
   width: 50%;
   background-color: #EFEEE7;
   height: 100%;
+  flex: 1 0 300px;
 `;
 
 class LandingPage extends Component {
+  state = {
+    bites: [],
+    shaking: false
+  }
+  
+  biteClick = (evt) => {
+    const newBite = { top: evt.clientY, left: evt.clientX };
+    this.setState(prevState => { 
+      return { 
+        bites: [...prevState.bites, newBite]
+      }
+    });
+  } 
+
   render() {
 
     const loginBlocks = (
@@ -55,10 +75,13 @@ class LandingPage extends Component {
       </div>
       );
 
+    const bites = this.state.bites.map((bite, idx) => <Bite key={idx} left={bite.left} top={bite.top} />);
+
     const burgerBlock = (
       <div className={burgerHero + ' p-8 text-center'}>
         <h1 className="text-5xl underline mb-8">The Burger Hunt</h1>
-        <div className="flex justify-center content-center">
+        <div className="flex justify-center content-center relative" onClick={(evt) => this.biteClick(evt)}>
+          {bites}
           <img src={burger} alt="A delicious burger" />
         </div>
       </div>

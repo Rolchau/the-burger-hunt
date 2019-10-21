@@ -15,13 +15,10 @@ class PictureList extends Component {
         const pictures = response.data;
         let randomPictures = [];
         for (let i = 0; i < 3; i++) {
-          console.log('Pictures', pictures);
           const randomNo = Math.floor(Math.random() * (pictures.length - randomPictures.length));
           const randomImg = pictures.splice(randomNo, 1)[0];
-          console.log('Random: ', randomImg);
           randomPictures.push(randomImg);
         }
-        console.log(randomPictures);
         this.setState({
           pictures: randomPictures,
           isLoading: false
