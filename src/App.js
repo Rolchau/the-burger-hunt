@@ -32,7 +32,7 @@ injectGlobal`
     will-change: opacity;
   }
   .slide-down {
-    animation: ${slideDown} 0.2s cubic-bezier(0.18, 0.33, 0.85, 0.13) forwards;
+    animation: ${slideDown} 0.4s cubic-bezier(0.18, 0.33, 0.85, 0.13) forwards;
     will-change: transform;
   }
 `;
