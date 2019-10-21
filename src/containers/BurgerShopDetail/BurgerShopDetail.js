@@ -1,33 +1,39 @@
 import React, { Component } from 'react';
 import {css} from 'emotion';
-import {instance as axios, endpoints} from '../../axios';
-import BurgerShopDetails from '../../components/BurgerShopDetails/BurgerShopDetails';
+import { instance, endpoints } from '../../axios';
+import axios from 'axios';
+import BurgerShop from '../../components/BurgerShop/BurgerShop';
 
 const BurgerDetail = css`
 `;
 
-class BurgerShop extends Component {
+class BurgerShopDetail extends Component {
   state = {
     shopDetails: null,
     loadedDetails: false,
-    reviews: null
+    reviews: null,
+    pictures: null
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    
-    axios.get(endpoints.shopdetail + id)
-      .then(response => {
+    axios
+    .all([
+      instance.get(endpoints.shopdetail + id),
+      instance.get(endpoints.reviews + '?shopId=' + id),
+      instance.get(endpoints.pictures + '?shopId=' + id)
+    ])
+    .then(
+      axios.spread((shop, reviews, pictures) => {
+        console.log('Pictures', pictures.data);
         this.setState({
-          shopDetails: response.data,
-        });
-        return axios.get(endpoints.reviews + '?shopId=' + id);
-      }).then(response => {
-        this.setState({
-          reviews: this.calculateScores(response.data),
+          shopDetails: shop.data,
+          reviews: this.calculateScores(reviews.data),
+          pictures: pictures.data,
           loadedDetails: true
         })
       })
+    );
   }
 
   calculateScores(reviews) {
@@ -47,7 +53,7 @@ class BurgerShop extends Component {
   render() {
     let burgerElm = <div>Loading...</div>
     if (this.state.loadedDetails) {
-      burgerElm = <BurgerShopDetails shopDetails={this.state.shopDetails} reviews={this.state.reviews} />;
+      burgerElm = <BurgerShop shopDetails={this.state.shopDetails} reviews={this.state.reviews} pictures={this.state.pictures}/>;
     }
     return (
       <div className={BurgerDetail}>
@@ -57,4 +63,4 @@ class BurgerShop extends Component {
   }
 }
 
-export default BurgerShop;
+export default BurgerShopDetail;

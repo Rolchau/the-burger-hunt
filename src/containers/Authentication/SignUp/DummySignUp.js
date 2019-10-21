@@ -67,7 +67,7 @@ class DummySignUp extends Component {
                 <Field className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" />
                 <ErrorMessage className="text-red-500 text-xs italic" name="password" component="div" />
               </div>
-              <button className={(isSubmitting ? 'cursor-not-allowed opacity-50 ' : '') + 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'} type="submit" disabled={isSubmitting}>
+              <button className={(isSubmitting ? 'cursor-not-allowed opacity-50 ' : '') + 'text-center bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'} type="submit" disabled={isSubmitting}>
                 Sign up
               </button>
             </Form>
@@ -77,7 +77,7 @@ class DummySignUp extends Component {
       { this.state.isCreated &&
         <div className="fade-in">
           <h1 className="text-2xl text-gray-700 mb-5">Thanks! Now sign in to hunt some burgers!</h1>
-          <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" to='/signin'>Sign in here</Link>
+          <Link className="text-center bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" to='/signin'>Sign in here</Link>
         </div>
       }
     </div>

@@ -1,18 +1,30 @@
-Pictures component
+[DONE] Pictures component
   - User Id / Link
 
-User Detail:
+[DONE] User Detail:
   - Pictures[]
 
-Landing page:
+[DONE] Landing page:
   - Signup / login
-  - Burger "game"
+  - Burger "game" (For later)
 
 Home page
   - clean up
   - Add random Pictures
 
+Header/Top bar
+  - Logo 
+  - Signout
+  - Evt. profile link. 
+
 Hall of Fame
+  - Styling
+
+Modal
+  - Rating...
+  - Images...
+
+Rating Page 
   - Styling
 
 ....much much more :D 

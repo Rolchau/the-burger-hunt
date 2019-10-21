@@ -78,6 +78,9 @@ function generateShopDetails() {
     const openingHoursTo = faker.random.number({min: 15, max: 22}) + ':00';
     const openingDays = 'Monday to Friday';
     const shopPictures = pictures.filter(pic => {
+      if (pic.shopId === id) {
+        pic.shopName = shopName;
+      }
       return pic.shopId === id;
     });
 

@@ -11,7 +11,8 @@ export class UserDetail extends Component {
   state = {
     user: null,
     isLoading: true,
-    loggedInUser: this.context.loggedInUser
+    loggedInUser: this.context.loggedInUser,
+    pictures: null
   }
 
   componentDidMount() {
@@ -20,23 +21,28 @@ export class UserDetail extends Component {
       .all([
         instance.get(endpoints.users + id),
         instance.get(endpoints.reviews + "?userId=" + id),
-        instance.get(endpoints.shoplist)
+        instance.get(endpoints.shoplist),
+        instance.get(endpoints.pictures)
       ])
       .then(
-        axios.spread((users, reviews, shops) => {
+        axios.spread((users, reviews, shops, pictures) => {
           const user = users.data;
           const shopArr = shops.data;
           const reviewsArr = reviews.data;
+          const pictureArr = pictures.data;
           
           reviewsArr.forEach(review => {
             const shop = shopArr.find(shop => shop.id === review.shopId).name;
             review.shopName = shop;
           });
-
           user.reviews = reviewsArr;
+
+          const userImages = pictureArr.filter(picture => picture.userId === user.id);
+          user.pictures = userImages;
+
           this.setState({
             user: user,
-            isLoading: false
+            isLoading: false,
           });
         })
       );

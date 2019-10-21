@@ -58,10 +58,10 @@ class DummySignIn extends Component {
                   <ErrorMessage className="text-red-500 text-xs italic" name="login-error" component="div" />
 
                   <div className="flex items-center justify-between">
-                    <button className={(isSubmitting ? 'cursor-not-allowed opacity-50 ' : '') + 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'} type="submit" disabled={isSubmitting}>
+                    <button className={(isSubmitting ? 'cursor-not-allowed opacity-50 ' : '') + 'text-center bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'} type="submit" disabled={isSubmitting}>
                       Sign in
                     </button>
-                    <Link to="/signup" className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                    <Link to="/signup" className="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800" href="#">
                       New hunter? Sign up here!
                     </Link>
                   </div> 

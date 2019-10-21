@@ -1,8 +1,9 @@
 import React from 'react';
 import { css } from 'emotion';
 import { Link } from 'react-router-dom';
+import PictureFrame from '../PictureFrame/PictureFrame';
 
-function BurgerShopDetails(props) {
+function BurgerShop(props) {
   const burgerImg = css`
     max-width: 100%;
   `;
@@ -33,16 +34,17 @@ function BurgerShopDetails(props) {
 
   const hasReviews = reviewNo > 0 ? true : false;
 
-  const pictureArr = props.shopDetails.pictures;
-  const pictures = pictureArr.map(img => (
-    <div key={img.id} className={burgerImgWrapper}>
-      <img className={burgerImg} src={img.imageUrl} alt="" />
-    </div>
-  ));
+  const pictures = props.pictures;
+  let pictureBlocks = (
+    <div className="text-red-500">There is no pictures yet.</div>
+  );
+  if (pictures.length) {
+    pictureBlocks = pictures.map(picture => <PictureFrame key={picture.id} picture={picture} />)
+  }
 
   return (
-    <div className="max-w-xl mx-auto m-4 p-6 bg-white rounded-lg shadow-xl">
-      <h1 className="text-5xl text-gray-600">{name}</h1>
+    <div className="fade-in max-w-xl mx-auto m-4 p-6 bg-white rounded-lg shadow-xl">
+      <h1 className="sm:text-5xl text-3xl text-gray-600">{name}</h1>
       <dl>
         <dt>Opening hours</dt>
         <dd>{openDays}</dd>
@@ -68,17 +70,13 @@ function BurgerShopDetails(props) {
         Rate it
       </Link>
 
-      {pictureArr.length ? 
-        <>
-        <h3 className="mt-3 text-2xl text-gray-700">User pictures</h3>
-        {pictures}
-        </>
-        :
-        <h3>TODO - Add upload button here. No images yet..</h3>
-      }
-      
+      <h3 className="mt-3 text-2xl text-gray-700">Images uploaded by our visitors:</h3>
+      <p className="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, eligendi.</p>
+      <div className="flex flex-wrap mt-4 text-gray-700">
+        {pictureBlocks}      
+      </div>
     </div>
   );
 }
 
-export default BurgerShopDetails;
+export default BurgerShop;

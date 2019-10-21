@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { instance as axios, endpoints } from "../../axios";
 import { CancelToken } from 'axios';
-import BurgerShopShort from "../../components/BurgerShopDetails/BurgerShopShort";
+import BurgerShopShort from '../../components/BurgerShop/BurgerShopShort';
 
 class BurgerShopList extends Component {
   state = {
