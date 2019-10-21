@@ -53,13 +53,13 @@ export const ThemeContext = React.createContext('light');
 class App extends React.Component {
   state = {
     loggedInUser: {}, 
-    authenticated: true,
+    authenticated: false,
   }
 
   setUser = user => {
     this.setState({
       loggedInUser: user,
-      authenticated: false
+      authenticated: true
     });
   }
 
