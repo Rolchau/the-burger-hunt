@@ -25,7 +25,7 @@ function BurgerRate(props) {
     }
 
     &.active svg {
-      fill: blue;
+      fill: orange;
     }
   `
 

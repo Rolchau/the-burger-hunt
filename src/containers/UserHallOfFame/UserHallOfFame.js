@@ -36,9 +36,9 @@ class UserHallOfFame extends Component {
   render() {
     const users = this.state.users.map(user => <UserShort key={user.id} user={user} handleClick={() => this.handleOnClick(user.id)}/>);
     return (
-      <div className="fade-in shadow-lg leading-normal bg-white max-w-md mx-auto p-6 rounded-lg">
-        <h1 className="text-gray-600 text-2xl mb-4">Top 5 Burger Hunters</h1>
-      {users}
+      <div className="fade-in shadow bg-orange-200 max-w-md mx-3 p-6 rounded-lg flex-auto">
+        <h1 className="text-orange-900 text-3xl mb-4">Top 5 Burger Hunters</h1>
+        {users}
       </div>
     )
   }

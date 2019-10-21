@@ -8,23 +8,31 @@
   - Signup / login
   - Burger "game" (For later)
 
-Home page
+[DONE] Home page
   - clean up
-  - Add random Pictures
+  - [DONE] Add random Pictures
 
-Header/Top bar
+[DONE] Header/Top bar
   - Logo 
   - Signout
   - Evt. profile link. 
 
-Hall of Fame
+[DONE] Hall of Fame
   - Styling
 
-Modal
+[DONE] Shop page
+ - Styling
+
+[DONE] Modal
   - Rating...
-  - Images...
-
-Rating Page 
+  
+[DONE ]Rating Page 
   - Styling
 
+Shop list
+  - Add sort buttons
+  - styling
+
+Images 
+ - Open larger version in modal
 ....much much more :D 

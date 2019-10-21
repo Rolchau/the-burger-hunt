@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, NavLink, Redirect, Switch } from 'react-router-dom';
 import { css, injectGlobal, keyframes } from 'emotion';
 import UserList from './containers/UserList/UserList';
 import BurgerShopList from './containers/BurgerShopList/BurgerShopList';
@@ -11,23 +11,41 @@ import HomePage from './containers/HomePage/HomePage';
 import AuthContext from './containers/Authentication/AuthContext'
 import UserDetail from './containers/UserDetail/UserDetail';
 import BurgerShopDetail from './containers/BurgerShopDetail/BurgerShopDetail';
+import Icon from './components/ui/Icon';
 
 const fadeIn = keyframes` 
   0%  { opacity: 0; }
   100% { opacity: 1; }
 `;
 
+const slideDown = keyframes`
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(0); }
+`
+
 injectGlobal`
   :root {
-    background-color: #c3c8cf;
+    background-color: #ffde9d;
   }
   .fade-in {
     animation: ${fadeIn} 0.2s ease-in-out forwards;
+    will-change: opacity;
+  }
+  .slide-down {
+    animation: ${slideDown} 0.2s cubic-bezier(0.18, 0.33, 0.85, 0.13) forwards;
+    will-change: transform;
   }
 `;
 
 const AppWrapper = css`
 
+`;
+
+const logo = css`
+  svg {
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 
 export const ThemeContext = React.createContext('light');
@@ -58,10 +76,12 @@ class App extends React.Component {
         <AuthContext.Provider value={{authenticated: this.state.authenticated, loggedInUser: this.state.loggedInUser, setUser: this.setUser}}>
         <div className={AppWrapper}>
           {this.state.authenticated && 
-            <header className="flex bg-white border-b border-gray-200 fixed top-0 z-10 inset-x-0 h-16 items-center justify-center bg-gray-100">
-              <NavLink to='/home' exact className="mx-10" activeClassName="text-red-600">Home</NavLink>
-              <NavLink to='/shoplist' className="mx-10" activeClassName="text-red-600">See all shops</NavLink>
-              <NavLink to='/users' className="mx-10" activeClassName="text-red-600">See the hunters</NavLink>
+            <header className="slide-down fixed top-0 z-10 inset-x-0 h-16 items-center justify-center text-orange-200 bg-orange-900 shadow-lg">
+              <div className="max-w-5xl mx-auto flex content-center justify-between h-16">
+                <Link to='/home' className={logo + ' p-4 self-center'}><Icon name="logo" /></Link>
+                <NavLink to={'/user-detail/' + this.state.loggedInUser.id} exact className="p-4 self-center ml-auto" activeClassName="underline text-orange-600">Your profile</NavLink>
+                <Link to='/landing' className="p-4 self-center" onClick={() => this.logout()}>Log out</Link>
+              </div>
             </header>
           }
 

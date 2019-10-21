@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import {css} from 'emotion';
 import { instance, endpoints } from '../../axios';
 import axios from 'axios';
 import BurgerShop from '../../components/BurgerShop/BurgerShop';
-
-const BurgerDetail = css`
-`;
+import Modal from '../../components/ui/Modal';
+import BurgerRating from '../BurgerRating/BurgerRating';
 
 class BurgerShopDetail extends Component {
   state = {
     shopDetails: null,
     loadedDetails: false,
     reviews: null,
-    pictures: null
+    pictures: null,
+    isRating: false,
   }
 
   componentDidMount() {
@@ -48,17 +47,41 @@ class BurgerShopDetail extends Component {
       totalScore: totalScore.toFixed(1),
       reviewNo: reviews.length
     };
-  } 
+  }
+  
+  ratedClickHandler = () => {
+    instance.get(endpoints.reviews + '?shopId=' + this.state.shopDetails.id)
+      .then(response => {
+        this.setState({
+          isRating: false,
+          reviews: this.calculateScores(response.data)
+        });    
+      });
+  }
+
+  rateClickHandler = () => {
+    console.log('Starting rating');
+    this.setState({
+      isRating: true,
+    });
+  }
   
   render() {
     let burgerElm = <div>Loading...</div>
     if (this.state.loadedDetails) {
-      burgerElm = <BurgerShop shopDetails={this.state.shopDetails} reviews={this.state.reviews} pictures={this.state.pictures}/>;
+      burgerElm = <BurgerShop shopDetails={this.state.shopDetails} reviews={this.state.reviews} pictures={this.state.pictures} handleRateClick={this.rateClickHandler}/>;
     }
+
+    let modalElm = '';
+    if (this.state.isRating) {
+      modalElm = <Modal><BurgerRating name={this.state.shopDetails.name} shopId={this.state.shopDetails.id} handleRatedClick={this.ratedClickHandler}/></Modal>
+    }
+
     return (
-      <div className={BurgerDetail}>
+      <>
         {burgerElm}
-      </div>
+        {modalElm}
+      </>
     )
   }
 }

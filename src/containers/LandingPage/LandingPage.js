@@ -37,9 +37,6 @@ const signHero = css`
   height: 100%;
 `;
 
-const burgerSVG = css`
-  max-width: 100%;
-`;
 class LandingPage extends Component {
   render() {
 
